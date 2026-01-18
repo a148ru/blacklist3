@@ -1,1 +1,5 @@
 blacklist3
+output
+md5sums.json
+.*
+.gitignore

@@ -9,8 +9,9 @@ import (
 
 func main() {
 	initLogger()
+	cfg := loadConfigFromAllSources()
 
-	cfg := loadConfig("config.yaml")
+	initHTTP(cfg.HTTP.TimeoutSeconds)
 
 	if cfg.Daemon.Enabled {
 		runDaemon(cfg)

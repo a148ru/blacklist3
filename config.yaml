@@ -41,3 +41,6 @@ output_dir: output
 daemon:
   enabled: false
   interval_seconds: 300
+
+http:
+  timeout_seconds: 10

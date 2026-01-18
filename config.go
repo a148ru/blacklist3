@@ -5,6 +5,7 @@ type Config struct {
 	MD5File   string     `yaml:"md5_file"`
 	OutputDir string     `yaml:"output_dir"`
 	Daemon    DaemonConf `yaml:"daemon"`
+	HTTP      HTTPConf   `yaml:"http"`
 }
 
 type Source struct {
@@ -16,4 +17,8 @@ type Source struct {
 type DaemonConf struct {
 	Enabled         bool `yaml:"enabled"`
 	IntervalSeconds int  `yaml:"interval_seconds"`
+}
+
+type HTTPConf struct {
+	TimeoutSeconds int `yaml:"timeout_seconds"`
 }

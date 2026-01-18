@@ -8,5 +8,5 @@ import (
 var logger *log.Logger
 
 func initLogger() {
-	logger = log.New(os.Stdout, "[md5loader] ", log.LstdFlags|log.Lshortfile)
+	logger = log.New(os.Stdout, "[blacklist] ", log.LstdFlags|log.Lshortfile)
 }
