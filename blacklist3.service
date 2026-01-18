@@ -1,0 +1,9 @@
+[Unit]
+Description=Blaclist updater ver.3
+
+[Service]
+ExecStart=/usr/local/bin/blacklist3
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
