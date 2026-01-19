@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        goos: [linux]
+        goos: [linux,freebsd,darwin]
         goarch: [amd64]
 
     steps:
@@ -47,6 +47,7 @@ jobs:
         with:
           name: blacklist3-${{ matrix.goos }}-${{ matrix.goarch }}
           path: dist/*
+          compression-level: 5
           overwrite: true
 
   release:
