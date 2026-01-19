@@ -2,7 +2,9 @@ name: Go Release
 
 on:
   push:
-#    tags:
+#    branches:
+#      - main
+#   tags:
 #      - "v*"
 
 permissions:
@@ -55,11 +57,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
 
+    strategy:
+      matrix:
+        goos: [linux,freebsd,darwin]
+        goarch: [amd64]
+
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: binaries
+          name: blacklist3-${{ matrix.goos }}-${{ matrix.goarch }}
           path: dist
 
       - name: Create release
