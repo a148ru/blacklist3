@@ -6,6 +6,7 @@ type Config struct {
 	OutputDir string     `yaml:"output_dir"`
 	Daemon    DaemonConf `yaml:"daemon"`
 	HTTP      HTTPConf   `yaml:"http"`
+	Service   Service    `yaml:"service"`
 }
 
 type Source struct {
@@ -21,4 +22,8 @@ type DaemonConf struct {
 
 type HTTPConf struct {
 	TimeoutSeconds int `yaml:"timeout_seconds"`
+}
+
+type Service struct {
+	Name string `yaml:"name"`
 }

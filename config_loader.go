@@ -7,36 +7,44 @@ import (
 )
 
 func loadConfigFromAllSources() *Config {
-	configPath := getEnvOrFlag("CONFIG_PATH", "config", "config.yaml")
-	cfg := loadConfig(configPath)
 
+	flagConfigPath := flag.String("config", "", "set path to config file")
 	flagInterval := flag.Int("interval", 0, "set the file update check interval")
-	flagOutput := flag.String("output","","specify the directory to write files")
-	flagMD5File := flag.String("md5","","specify a file to store checksums")
-	flagHttpTimeOut := flag.Int("http-timeout",0,"specify http timeout")
-	flagDaemon := flag.Bool("daemon", false,"specify a flag to run as a daemon")
+	flagOutput := flag.String("output", "", "specify the directory to write files")
+	flagMD5File := flag.String("md5", "", "specify a file to store checksums")
+	flagHttpTimeOut := flag.Int("http-timeout", 0, "specify http timeout")
+	flagDaemon := flag.Bool("daemon", false, "specify a flag to run as a daemon")
+	flagSevise := flag.String("service", "", "Specify the name of the service that needs to be restarted after updating the data.")
 	flag.Parse()
 
+	configPath := getEnvOrFlag("CONFIG_PATH", flagConfigPath, "config.yaml")
+	cfg := loadConfig(configPath)
 
-	overrideInt(&cfg.Daemon.IntervalSeconds, "DAEMON_INTERVAL", "interval", flagInterval)
-	overrideString(&cfg.OutputDir, "OUTPUT_DIR", "output", flagOutput)
-	overrideString(&cfg.MD5File, "MD5_FILE", "md5", flagMD5File)
-	overrideInt(&cfg.HTTP.TimeoutSeconds, "HTTP_TIMEOUT", "http-timeout", flagHttpTimeOut)
-	overrideBool(&cfg.Daemon.Enabled, "DAEMON_ENABLED", "daemon", flagDaemon)
+	overrideString(&cfg.OutputDir, "OUTPUT_DIR", flagOutput)
+	overrideString(&cfg.MD5File, "MD5_FILE", flagMD5File)
+	overrideInt(&cfg.Daemon.IntervalSeconds, "DAEMON_INTERVAL", flagInterval)
+	overrideInt(&cfg.HTTP.TimeoutSeconds, "HTTP_TIMEOUT", flagHttpTimeOut)
+	overrideBool(&cfg.Daemon.Enabled, "DAEMON_ENABLED", flagDaemon)
+	overrideString(&cfg.Service.Name, "SERVICE_NAME_RELOADS", flagSevise)
 
 	return cfg
 }
 
-func getEnvOrFlag(env, flagName, def string) string {
+func getEnvOrFlag(env string, flagName *string, def string) string {
+
+	if *flagName != "" {
+		return *flagName
+	}
+
 	val := os.Getenv(env)
 	if val != "" {
 		return val
 	}
+
 	return def
 }
 
-func overrideString(target *string, env, flagName string, flagValue *string) {
-
+func overrideString(target *string, env string, flagValue *string) {
 
 	if *flagValue != "" {
 		*target = *flagValue
@@ -48,7 +56,7 @@ func overrideString(target *string, env, flagName string, flagValue *string) {
 	}
 }
 
-func overrideBool(target *bool, env, flagName string, flagValue *bool) {
+func overrideBool(target *bool, env string, flagValue *bool) {
 
 	if *flagValue {
 		*target = *flagValue
@@ -61,9 +69,9 @@ func overrideBool(target *bool, env, flagName string, flagValue *bool) {
 	}
 }
 
-func overrideInt(target *int, env, flagName string, flagValue *int) {
+func overrideInt(target *int, env string, flagValue *int) {
 
-	if *flagValue != 0{
+	if *flagValue != 0 {
 		*target = *flagValue
 		return
 	}

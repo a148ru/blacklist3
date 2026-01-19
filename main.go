@@ -1,10 +1,10 @@
 package main
 
 import (
-	"gopkg.in/yaml.v3"
 	"os"
 	"sync"
-//	"time"
+
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -30,6 +30,8 @@ func loadConfig(path string) *Config {
 }
 
 func runOnce(cfg *Config) {
+	need_reset := true
+
 	os.MkdirAll(cfg.OutputDir, 0755)
 
 	md5store := loadMD5(cfg.MD5File)
@@ -39,7 +41,7 @@ func runOnce(cfg *Config) {
 	for _, src := range cfg.Sources {
 		wg.Add(1)
 
-		go func(src Source) {
+		go func(src Source, need_reset *bool) {
 			defer wg.Done()
 
 			logger.Println("Загрузка:", src.Name)
@@ -57,19 +59,25 @@ func runOnce(cfg *Config) {
 
 			if old == sum {
 				logger.Println("Без изменений:", src.Name)
+				*need_reset = false
 				return
 			}
 
 			logger.Println("Обновление:", src.Name)
 			processData(data, cfg.OutputDir, src.Name)
-
 			mu.Lock()
 			md5store[src.Name] = sum
 			mu.Unlock()
-		}(src)
+		}(src, &need_reset)
 	}
 
 	wg.Wait()
 	saveMD5(cfg.MD5File, md5store)
-}
 
+	if cfg.Service.Name != "" && need_reset == true {
+		err := srvrestarter(cfg.Service.Name)
+		if err != nil {
+			logger.Println(err)
+		}
+	}
+}
