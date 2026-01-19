@@ -47,6 +47,7 @@ jobs:
         with:
           name: binaries
           path: dist/*
+          overwrite: true
   release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
@@ -64,3 +65,4 @@ jobs:
         with:
           files: dist/*
           generate_release_notes: true
+          overwrite: true
