@@ -32,9 +32,11 @@ func srvrestarter(serviceName string) error {
 		if err != nil {
 			return err
 		}
+	default:
+		err := errors.New("Перезапуск службы в ОС не предусмотрен\n")
+		return err
 	}
-	err := errors.New("Перезапуск службы в ОС не предусмотрен\n")
-	return err
+	return nil
 }
 
 func restartExternalServiceWindows(serviceName string) error {
