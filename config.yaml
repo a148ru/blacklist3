@@ -1,4 +1,8 @@
 sources:
+  - name: ip1
+    type: url
+    path: https://antifilter.network/download/ip.lst
+    
   - name: ipsum
     type: url
     path: https://antifilter.download/list/ipsum.lst
