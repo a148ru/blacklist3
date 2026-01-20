@@ -2,6 +2,8 @@
 Description=Blaclist updater ver.3
 
 [Service]
+User=bird
+Group=bird
 ExecStart=/usr/local/bin/blacklist3
 Restart=always
 

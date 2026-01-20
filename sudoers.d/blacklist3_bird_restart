@@ -1,0 +1,1 @@
+blacklist ALL=(root) NOPASSWD: /bin/systemctl restart bird, /bin/systemctl start bird, /bin/systemctl stop bird
