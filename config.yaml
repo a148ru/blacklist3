@@ -1,50 +1,18 @@
 sources:
-  - name: ip
-    type: url
-    path: https://antifilter.network/download/ip.lst
-
   - name: ipsum
     type: url
     path: https://antifilter.download/list/ipsum.lst
 
-  - name: subnet
-    type: url
-    path: https://antifilter.download/list/subnet.lst
-
-  - name: ip-agr
-    type: url
-    path: https://github.com/ipverse/rir-ip/raw/refs/heads/master/country/ru/ipv4-aggregated.txt
-
-  - name: digitalocean
-    type: url
-    path: https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/digitalocean.lst
-
-  - name: Meta.lst
-    type: url
-    path: https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst
-
-  - name: cloudflare
-    type: url
-    path: https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/cloudflare.lst
-
-  - name: Microsoft
-    type: url
-    path: https://raw.githubusercontent.com/lord-alfred/ipranges/main/microsoft/ipv4.txt
-
-  - name: Google.lst
-    type: url
-    path: https://raw.githubusercontent.com/lord-alfred/ipranges/main/google/ipv4.txt
-
   - name: local_list
     type: file
-    path: ./local.txt
+    path: /opt/blacklist3/local.txt
 
-md5_file: md5sums.json
-output_dir: output
+md5_file: /etc/bird/md5sums.json
+output_dir: /etc/bird
 
 daemon:
   enabled: false
-  interval_seconds: 300
+  interval_seconds: 3000
 
 http:
   timeout_seconds: 10

@@ -4,7 +4,7 @@ Description=Blaclist updater ver.3
 [Service]
 User=bird
 Group=bird
-ExecStart=/usr/local/bin/blacklist3
+ExecStart=/opt/blacklist3/blacklist3 -daemon -config /opt/blacklist3/config.yaml
 Restart=always
 
 [Install]
