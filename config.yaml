@@ -1,18 +1,34 @@
 sources:
-  - name: ipsum
+  - name: subnet
     type: url
-    path: https://antifilter.download/list/ipsum.lst
+    path: https://antifilter.download/list/subnet.lst
+
+  - name: Meta
+    type: url
+    path: https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/Meta.lst        
+
+  - name: Google
+    type: url
+    path: https://raw.githubusercontent.com/lord-alfred/ipranges/main/google/ipv4.txt
+
+  - name: digitalocean
+    type: url
+    path: https://raw.githubusercontent.com/itdoginfo/allow-domains/refs/heads/main/Subnets/IPv4/digitalocean.lst
 
   - name: local_list
     type: file
     path: /opt/blacklist3/local.txt
 
-md5_file: /etc/bird/md5sums.json
+md5_file: md5sums.json
 output_dir: /etc/bird
 
 daemon:
   enabled: false
-  interval_seconds: 3000
+  interval_seconds: 5
 
 http:
   timeout_seconds: 10
+  insecure_skip_verify: true 
+
+service:
+  name: bird

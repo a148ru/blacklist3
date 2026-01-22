@@ -6,13 +6,28 @@ import (
 	"os"
 	"time"
 	"fmt"
+	"crypto/tls"
 )
 
 var httpClient *http.Client
-
+/*
 func initHTTP(timeoutSec int) {
 	httpClient = &http.Client{
 		Timeout: time.Duration(timeoutSec) * time.Second,
+	}
+}
+*/
+
+func initHTTP(cfg HTTPConf) {
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: cfg.InsecureSkipVerify,
+		},
+	}
+
+	httpClient = &http.Client{
+		Timeout:   time.Duration(cfg.TimeoutSeconds) * time.Second,
+		Transport: tr,
 	}
 }
 

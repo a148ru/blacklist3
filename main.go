@@ -11,8 +11,9 @@ func main() {
 	initLogger()
 	cfg := loadConfigFromAllSources()
 
-	initHTTP(cfg.HTTP.TimeoutSeconds)
-
+	//initHTTP(cfg.HTTP.TimeoutSeconds)
+	initHTTP(cfg.HTTP)
+	
 	if cfg.Daemon.Enabled {
 		runDaemon(cfg)
 		return

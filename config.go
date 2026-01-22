@@ -22,6 +22,7 @@ type DaemonConf struct {
 
 type HTTPConf struct {
 	TimeoutSeconds int `yaml:"timeout_seconds"`
+	InsecureSkipVerify   bool `yaml:"insecure_skip_verify"`
 }
 
 type Service struct {
