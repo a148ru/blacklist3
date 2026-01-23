@@ -65,7 +65,7 @@ daemon:
 
 http:
   timeout_seconds: 10
-
+  insecure_skip_verify: true
 service:
   name: bird
 ```
@@ -83,6 +83,7 @@ service:
   - `interval_seconds` — интервал между запусками (в секундах).
 - `http` — настройки HTTP-запросов:
   - `timeout_seconds` — тайм-аут запроса (в секундах).
+  - `insecure_skip_verify` - игнорировать проверку ssl сертификата
 - `service` — настройки сервиса BGP:
   - `name` — имя сервиса для перезапуска.
 
